@@ -31,7 +31,7 @@ const char* Settings::GetDefaultForwardMaterialId() {
 }
 
 const char* Settings::GetDefaultDeferredMaterialId() {
-#if defined(__ANDROID__) || defined(__EMSCRIPTEN__)
+#if 1
     return m_defaultDeferredProxyMaterialID;
 #else
     return m_defaultDeferredMaterialID;
