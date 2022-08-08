@@ -11,4 +11,5 @@
  
  ## 렌더러 엔진 라이센스 관련
  
- 렌더러 엔진의 라이센스는 [CSEngine](https://github.com/ounols/CSEngine) 레포지토리에서 확인할 수 있습니다.
+ 렌더러 엔진의 라이센스는 [CSEngine](https://github.com/ounols/CSEngine) 레포지토리에서 확인할 수 있으며,<br>
+ 이 레포지토리의 `LICENSE` 문서는 렌더러 엔진 기준으로 작성되어있습니다.
