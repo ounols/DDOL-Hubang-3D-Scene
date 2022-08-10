@@ -1,7 +1,3 @@
-//
-// Created by ounol on 2022-08-09.
-//
-
 #pragma once
 
 #include <Component/SComponent.h>

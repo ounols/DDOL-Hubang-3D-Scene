@@ -14,6 +14,7 @@
 #include "FirstDemoScene.h"
 #include <Util/AssetsDef.h>
 #include <Component/GameManagerComponent.h>
+#include <Component/DdolTextureChanger.h>
 
 
 using namespace CSE;
@@ -39,13 +40,13 @@ void FirstDemoScene::Init() {
 
     auto camera = new SGameObject("main camera");
     auto camera_component = camera->CreateComponent<CameraComponent>();
-    camera->GetTransform()->m_position = vec3{ 0, 0.f, 0.f };
+    camera->GetTransform()->m_position = vec3{ 0, -0.3f, 0.f };
     auto camera_custom_comp = camera->CreateComponent<CustomComponent>();
     camera_custom_comp->SetClassName("CameraMovement.script");
 
     auto cameraTarget = new SGameObject("camera target");
     cameraTarget->SetParent(camera);
-    cameraTarget->GetTransform()->m_position = vec3{ 0.0f, -0.01f, 0.3f };
+    cameraTarget->GetTransform()->m_position = vec3{ 0.0f, 0.0f, 0.3f };
     camera_component->SetTarget(cameraTarget);
 
 
@@ -59,7 +60,7 @@ void FirstDemoScene::Init() {
 
 
     auto* roomPrefab = SResource::Create<SPrefab>("bg.prefab");
-    auto room = roomPrefab->Clone(vec3{ 0, -1.f, 0 }, game_root);
+    auto* room = roomPrefab->Clone(vec3{ 0, -1.f, 0 }, game_root);
 
     const auto& room_children = room->GetChildren();
     int index = 0;
@@ -67,6 +68,33 @@ void FirstDemoScene::Init() {
         const auto& component = child->GetComponent<RenderComponent>();
         if (component == nullptr) continue;
         component->SetMaterial(SResource::Create<SMaterial>("File:Texture/" + std::to_string(index++) + ".mat"));
+    }
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    auto* planePrefab = SResource::Create<SPrefab>("plane_circle.prefab");
+
+    for(int i = 0; i < 16; ++i) {
+        auto* ddol_root = new SGameObject("ddol_" + std::to_string(i));
+        ddol_root->SetParent(game_root);
+        ddol_root->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, -(Pi / 8) * i);
+
+        auto* plane = planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, ddol_root);
+        const float plane_scale = 0.2f;
+        plane->GetTransform()->m_scale = vec3{ 2.34f * plane_scale, plane_scale, plane_scale };
+        plane->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, Pi);
+        const auto& texChanger = plane->CreateComponent<DdolTextureChanger>();
+        texChanger->SetGameManagerComponent(m_gameManagerComponent);
+
+        const auto& plane_children = plane->GetChildren();
+        index = 0;
+        for (const auto& child: plane_children) {
+            const auto& component = child->GetComponent<RenderComponent>();
+            if (component == nullptr) continue;
+            component->SetMaterial(SResource::Create<SMaterial>("File:Texture/ddol.mat"));
+            component->GetMaterial();
+            texChanger->SetMaterials(component->GetMaterial());
+        }
     }
 
     {
