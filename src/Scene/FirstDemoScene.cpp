@@ -78,6 +78,7 @@ void FirstDemoScene::Init() {
         auto* ddol_root = new SGameObject("ddol_" + std::to_string(i));
         ddol_root->SetParent(game_root);
         ddol_root->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, -(Pi / 8) * i);
+        ddol_root->CreateComponent<CustomComponent>()->SetClassName("FirstDdolMovement.script");
 
         auto* plane = planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, ddol_root);
         const float plane_scale = 0.2f;
