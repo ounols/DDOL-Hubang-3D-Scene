@@ -112,6 +112,10 @@ void main(void) {
 	highp float ao        = texture(u_sampler_albedo, v_textureCoordOut).r * 0.5 + 0.5;
 	highp float alpha	 = texture(u_sampler_albedo, v_textureCoordOut).a;
 
+	if(alpha < 0.01) {
+		discard;
+	}
+
 	vec3 N = getNormalFromMap();
 	vec3 V0 = normalize(N - v_worldPosition);
 	vec3 R = reflect(-V0, N);
