@@ -6,6 +6,9 @@ class CameraMovement extends CSEngineScript {
 
     function Init() {
         camera = gameObject.GetComponent<CameraComponent>();
+        local up_vec = vec3();
+        up_vec.Set(0.2, 0.9, 0);
+        camera.SetUp(up_vec);
         local game_manager_obj = gameObject.Find("game manager");
         gameMgr = game_manager_obj.GetClass<GameManagerScript>();
         myTransform = gameObject.GetTransform();
