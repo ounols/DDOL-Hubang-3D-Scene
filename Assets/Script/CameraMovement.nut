@@ -15,6 +15,9 @@ class CameraMovement extends CSEngineScript {
     }
 
     function Tick(elapsedTime) {
+        if(gameMgr.sBpmPart > 31) {
+            return;
+        }
         local value = gameMgr.sBpmLerp;
         local rotate = vec3();
         rotate.Set(0, -1, 0);

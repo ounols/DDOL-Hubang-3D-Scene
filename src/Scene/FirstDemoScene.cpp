@@ -43,6 +43,7 @@ void FirstDemoScene::Init() {
     camera->GetTransform()->m_position = vec3{ 0, -0.3f, 0.f };
     auto camera_custom_comp = camera->CreateComponent<CustomComponent>();
     camera_custom_comp->SetClassName("CameraMovement.script");
+    camera->CreateComponent<CustomComponent>()->SetClassName("FocusCameraMovement.script");
 
     auto cameraTarget = new SGameObject("camera target");
     cameraTarget->SetParent(camera);
@@ -81,6 +82,7 @@ void FirstDemoScene::Init() {
         ddol_root->CreateComponent<CustomComponent>()->SetClassName("FirstDdolMovement.script");
 
         auto* plane = planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, ddol_root);
+        plane->SetName("ddol_plane_" + std::to_string(i));
         const float plane_scale = 0.2f;
         plane->GetTransform()->m_scale = vec3{ 2.34f * plane_scale, plane_scale, plane_scale };
         plane->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, Pi);
