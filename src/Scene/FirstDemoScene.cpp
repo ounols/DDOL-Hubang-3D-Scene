@@ -73,7 +73,7 @@ void FirstDemoScene::Init() {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    auto* planePrefab = SResource::Create<SPrefab>("plane_circle.prefab");
+    m_planePrefab = SResource::Create<SPrefab>("plane.prefab");
 
     for(int i = 0; i < 16; ++i) {
         auto* ddol_root = new SGameObject("ddol_" + std::to_string(i));
@@ -81,7 +81,7 @@ void FirstDemoScene::Init() {
         ddol_root->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, -(Pi / 8) * i);
         ddol_root->CreateComponent<CustomComponent>()->SetClassName("FirstDdolMovement.script");
 
-        auto* plane = planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, ddol_root);
+        auto* plane = m_planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, ddol_root);
         plane->SetName("ddol_plane_" + std::to_string(i));
         const float plane_scale = 0.2f;
         plane->GetTransform()->m_scale = vec3{ 2.34f * plane_scale, plane_scale, plane_scale };
@@ -143,4 +143,8 @@ void FirstDemoScene::Tick(float elapsedTime) {
 
 void FirstDemoScene::Destroy() {
 
+}
+
+void FirstDemoScene::GenerateTextArea(SGameObject* root) {
+//    auto* plane = m_planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, root);
 }

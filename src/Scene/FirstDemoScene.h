@@ -19,7 +19,12 @@ public:
     void Destroy() override;
 
 private:
+    void GenerateTextArea(CSE::SGameObject* root);
+
+private:
     std::chrono::time_point<std::chrono::system_clock> m_startClock;
     unsigned short m_bpm = 200;
     GameManagerComponent* m_gameManagerComponent = nullptr;
+
+    CSE::SPrefab* m_planePrefab = nullptr;
 };
