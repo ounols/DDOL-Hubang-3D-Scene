@@ -45,7 +45,7 @@ class TextMovement1 extends CSEngineScript {
     function Text_1(value) {
         local pos = vec3();
         local scl = vec3();
-        local v = pow(value, 0.13) + pow(value, 7) - 0.4;
+        local v = pow(value, 0.1) + pow(value, 14) - 0.4;
         local vs= pow(value, 0.3) * textScale;
 
         pos.Set(0, 0.2 * v, 0.01 + 0.5 * v);
@@ -58,7 +58,7 @@ class TextMovement1 extends CSEngineScript {
     function Text_2(value) {
         local pos = vec3();
         local scl = vec3();
-        local v = pow(value, 0.13) + pow(value, 7) - 0.4;
+        local v = pow(value, 0.1) + pow(value, 14) - 0.4;
         local vs= pow(value, 0.3) * textScale;
 
         pos.Set(0, -0.3 * v, 0.01 + 0.7 * v);
