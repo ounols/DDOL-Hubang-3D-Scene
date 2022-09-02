@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CSEMAT version="1.0.0">
+<shader id="File:Shader/base.shader">
+<var name="texture.albedo" type="tex" count="1">File:Texture/albedo/ddol-albedo0.png</var>
+</shader>
+</CSEMAT>

@@ -20,6 +20,7 @@ public:
 
 private:
     void GenerateTextArea(CSE::SGameObject* root);
+    static const CSE::RenderComponent* SetMaterialInGameObject(CSE::SGameObject* obj, CSE::SMaterial* mat);
 
 private:
     std::chrono::time_point<std::chrono::system_clock> m_startClock;

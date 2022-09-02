@@ -75,7 +75,7 @@ void FirstDemoScene::Init() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     m_planePrefab = SResource::Create<SPrefab>("plane.prefab");
 
-    for(int i = 0; i < 16; ++i) {
+    for (int i = 0; i < 16; ++i) {
         auto* ddol_root = new SGameObject("ddol_" + std::to_string(i));
         ddol_root->SetParent(game_root);
         ddol_root->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, -(Pi / 8) * i);
@@ -88,14 +88,21 @@ void FirstDemoScene::Init() {
         plane->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, Pi);
         const auto& texChanger = plane->CreateComponent<DdolTextureChanger>();
         texChanger->SetGameManagerComponent(m_gameManagerComponent);
+        if (i == 0) {
+            auto* text_root = new SGameObject("text_root");
+            text_root->SetParent(ddol_root);
+            text_root->GetTransform()->m_position = vec3{ 0.02f, -0.2f, 1.5f };
+            text_root->GetTransform()->m_rotation = Quaternion::AngleAxis(vec3{ 0, 1, 0 }, Pi);
+            GenerateTextArea(text_root);
+        }
 
         const auto& plane_children = plane->GetChildren();
         index = 0;
+
         for (const auto& child: plane_children) {
             const auto& component = child->GetComponent<RenderComponent>();
             if (component == nullptr) continue;
             component->SetMaterial(SResource::Create<SMaterial>("File:Texture/ddol.mat"));
-            component->GetMaterial();
             texChanger->SetMaterials(component->GetMaterial());
         }
     }
@@ -146,5 +153,34 @@ void FirstDemoScene::Destroy() {
 }
 
 void FirstDemoScene::GenerateTextArea(SGameObject* root) {
-//    auto* plane = m_planePrefab->Clone(vec3{ 0.02f, -0.2f, 1.5f }, root);
+
+    {
+        std::vector<SGameObject*> plane_list = { m_planePrefab->Clone(vec3{ 0, 0, 0 }, root),
+                                                 m_planePrefab->Clone(vec3{ 0, 0, 0 }, root) };
+
+        for (unsigned short i = 0; i < plane_list.size(); ++i) {
+            const auto& plane = plane_list[i];
+            const float plane_scale = 0.1f;
+            plane->GetTransform()->m_scale = vec3{ 0, 0, 0 };
+            const auto& render_1 = SetMaterialInGameObject(plane,
+                                                           SResource::Create<SMaterial>("File:Texture/text.mat"));
+            render_1->GetMaterial()->SetTexture("texture.albedo", SResource::Create<STexture>(
+                    "File:Texture/text/1-" + std::to_string(i + 1) + ".png"));
+
+            const auto& script = plane->CreateComponent<CustomComponent>();
+            script->SetClassName("TextMovement1.script");
+            script->SetValue("__variable__", { "index", std::to_string(i + 1), "int" });
+        }
+    }
+}
+
+const RenderComponent* FirstDemoScene::SetMaterialInGameObject(CSE::SGameObject* obj, CSE::SMaterial* mat) {
+    const auto& children = obj->GetChildren();
+    for (const auto& child: children) {
+        const auto& component = child->GetComponent<RenderComponent>();
+        if (component == nullptr) continue;
+        component->SetMaterial(mat);
+        return component;
+    }
+    return nullptr;
 }
