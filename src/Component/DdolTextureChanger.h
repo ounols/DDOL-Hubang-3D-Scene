@@ -10,7 +10,7 @@ namespace CSE {
 
 class DdolTextureChanger : public CSE::SComponent {
 public:
-    DdolTextureChanger();
+    COMPONENT_DEFINE_CONSTRUCTOR(DdolTextureChanger);
 
     ~DdolTextureChanger() override;
 

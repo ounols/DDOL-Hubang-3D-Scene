@@ -41,6 +41,8 @@ void FirstDemoScene::Init() {
     auto camera = new SGameObject("main camera");
     auto camera_component = camera->CreateComponent<CameraComponent>();
     camera->GetTransform()->m_position = vec3{ 0, -0.3f, 0.f };
+    camera_component->SetBackgroundSkybox();
+    camera_component->SetBackgroundType(CSE::CameraBase::SKYBOX);
     auto camera_custom_comp = camera->CreateComponent<CustomComponent>();
     camera_custom_comp->SetClassName("CameraMovement.script");
     camera->CreateComponent<CustomComponent>()->SetClassName("FocusCameraMovement.script");

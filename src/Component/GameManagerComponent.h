@@ -4,7 +4,7 @@
 
 class GameManagerComponent : public CSE::SComponent {
 public:
-    GameManagerComponent();
+    COMPONENT_DEFINE_CONSTRUCTOR(GameManagerComponent);
 
     ~GameManagerComponent() override;
 

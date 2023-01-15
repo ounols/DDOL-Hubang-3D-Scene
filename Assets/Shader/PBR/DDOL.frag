@@ -48,6 +48,8 @@ uniform sampler2D u_shadowMap[MAX_LIGHTS];
 uniform lowp int u_shadowMode[MAX_LIGHTS];
 //[light.size]//
 uniform int u_lightSize;
+//[vec3.camera]//
+uniform vec3 u_cameraPosition;
 
 //Varying
 in mediump vec3 v_eyespaceNormal;//EyespaceNormal;
@@ -87,7 +89,7 @@ float ClampedPow(float X, float Y) {
 vec3 getNormalFromMap()
 {
 	vec2 normal_raw = texture(u_sampler_normal, v_textureCoordOut).xy;
-	vec3 tangentNormal = vec3(normal_raw.x, normal_raw.y, max(sqrt(1.f - normal_raw.x * normal_raw.x - normal_raw.y * normal_raw.y), 0.f));
+	vec3 tangentNormal = vec3(normal_raw.x, normal_raw.y, 0.5f);
 	tangentNormal = normalize(tangentNormal) * 2.0 - 1.0;
 
 	vec3 Q1  = dFdx(v_worldPosition);
@@ -108,7 +110,7 @@ void main(void) {
 
 	highp vec3 albedo     = pow(texture(u_sampler_albedo, v_textureCoordOut).rgb, vec3(2.2)) * u_albedo;
 	highp float metallic  = 0.09;
-	highp float roughness = 0.99;
+	highp float roughness = 0.8 + albedo.b * 0.2;
 	highp float ao        = texture(u_sampler_albedo, v_textureCoordOut).r * 0.5 + 0.5;
 	highp float alpha	 = texture(u_sampler_albedo, v_textureCoordOut).a;
 
@@ -117,7 +119,7 @@ void main(void) {
 	}
 
 	vec3 N = getNormalFromMap();
-	vec3 V0 = normalize(N - v_worldPosition);
+	vec3 V0 = normalize(u_cameraPosition - v_worldPosition);
 	vec3 R = reflect(-V0, N);
 
 	// calculate reflectance at normal incidence; if dia-electric (like plastic) use F0

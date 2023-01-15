@@ -10,7 +10,7 @@ namespace CSE {
 
 class TextTextureChooser : public CSE::SComponent {
 public:
-    TextTextureChooser();
+    COMPONENT_DEFINE_CONSTRUCTOR(TextTextureChooser);
     ~TextTextureChooser() override;
 
     void Init() override;

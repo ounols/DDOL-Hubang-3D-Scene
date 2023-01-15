@@ -7,9 +7,9 @@
 using namespace CSE;
 
 const char* Settings::m_deferredGeometryPassShaderID = "File:Shader/PBR/PBR-Geometry-Pass.shader";
-const char* Settings::m_defaultForwardMaterialID = "File:Material/DefaultPBR.mat";
-const char* Settings::m_defaultDeferredMaterialID = "File:Material/Default.mat";
-const char* Settings::m_defaultDeferredProxyMaterialID = "File:Material/DefaultPBR.mat";
+const char* Settings::m_defaultForwardMaterialID = "File:Global Material/DefaultPBR.mat";
+const char* Settings::m_defaultDeferredMaterialID = "File:Global Material/Default.mat";
+const char* Settings::m_defaultDeferredProxyMaterialID = "File:Global Material/DefaultPBR.mat";
 const char* Settings::m_defaultMainBufferShaderID = "File:Shader/Main-Buffer.shader";
 const char* Settings::m_defaultBlitBufferShaderID = "File:Shader/Blit-Buffer.shader";
 const int Settings::m_maxLights = 8;
